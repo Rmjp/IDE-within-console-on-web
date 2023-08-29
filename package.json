@@ -20,5 +20,13 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.4.2"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@codemirror/lang-cpp": "^6.0.2",
+		"@codemirror/lang-javascript": "^6.2.1",
+		"codemirror": "^6.0.1",
+		"flowbite": "^1.8.1",
+		"flowbite-svelte": "^0.44.4",
+		"flowbite-svelte-icons": "^0.3.6"
+	}
 }

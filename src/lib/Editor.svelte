@@ -13,14 +13,14 @@ int main()
 
   return 0;
 }`
-
+    let editors;
     onMount(() => {
         let language = new Compartment, tabSize = new Compartment
         let theme = EditorView.theme({
             "&": {
                 color: "white",
                 backgroundColor: "#034",
-                height: "300px",
+                height: "100%",
             },
             ".cm-content": {
                 caretColor: "#fff"
@@ -36,7 +36,7 @@ int main()
                 color: "#ddd",
                 border: "none"
             },
-            ".cm-scroller": {overflow: "auto"},
+            ".cm-scroller": {overflow: "auto", height: "100%"},
             }, {dark: true},
             )
         
@@ -55,7 +55,7 @@ int main()
         let editor = new EditorView({
             doc,
             state,
-            parent: document.body,
+            parent: editors,
             
         })
 
@@ -65,6 +65,5 @@ int main()
         });
     });
 </script>
-<body>
-
-</body>
+<div id="editor" class="h-full" bind:this={editors}>
+</div>

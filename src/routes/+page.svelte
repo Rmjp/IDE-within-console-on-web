@@ -1,3 +1,6 @@
+<script>
+    import Editor from "$lib/Editor.svelte";
+</script>
 <div class="h-screen">
     <div class="flex flex-row flex-wrap h-full">
         <div class="w-full sm:w-1/3 md:w-1/4 px-2 h-full">
@@ -10,7 +13,7 @@
             </div>
 
             <div class="h-3/4">
-                editor
+                <Editor/>
             </div>
 
             <div>

@@ -19,22 +19,11 @@ int main()
         let theme = EditorView.theme({
             "&": {
                 color: "white",
-                backgroundColor: "#034",
+                backgroundColor: "#2f2f2f",
                 height: "100%",
             },
-            ".cm-content": {
-                caretColor: "#fff"
-            },
-            "&.cm-focused .cm-cursor": {
-                borderLeftColor: "#0e9"
-            },
-            "&.cm-focused .cm-selectionBackground, ::selection": {
-                backgroundColor: "#074"
-            },
-            ".cm-gutters": {
-                backgroundColor: "#045",
-                color: "#ddd",
-                border: "none"
+            ".cm-gutter": {
+                backgroundColor: "#000",
             },
             ".cm-scroller": {overflow: "auto", height: "100%"},
             }, {dark: true},

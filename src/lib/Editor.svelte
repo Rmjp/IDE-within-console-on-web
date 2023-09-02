@@ -13,9 +13,8 @@ int main()
 
   return 0;
 }`
-    let editors: HTMLDivElement;
+    let editors;
     onMount(() => {
-        
         let language = new Compartment, tabSize = new Compartment
         let theme = EditorView.theme({
             "&": {

@@ -28,6 +28,8 @@
 		"flowbite": "^1.8.1",
 		"flowbite-svelte": "^0.44.4",
 		"flowbite-svelte-icons": "^0.3.6",
-		"tailwind-merge": "^1.13.2"
+		"tailwind-merge": "^1.13.2",
+		"xterm": "^5.2.1",
+		"xterm-addon-fit": "^0.7.0"
 	}
 }

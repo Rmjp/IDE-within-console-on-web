@@ -10,10 +10,12 @@
 
 int main()
 {
-
+  printf("Hello, world!\\n");
   return 0;
-}`
+}`;
     let editors;
+    let state;
+    let editor;
     onMount(() => {
         let language = new Compartment, tabSize = new Compartment
         let theme = EditorView.theme({
@@ -29,7 +31,8 @@ int main()
             }, {dark: true},
             )
         
-        let state = EditorState.create({
+        state = EditorState.create({
+            doc,
         extensions: [
             basicSetup,
             language.of(cpp()),
@@ -41,8 +44,7 @@ int main()
         })
 
 
-        let editor = new EditorView({
-            doc,
+        editor = new EditorView({
             state,
             parent: editors,
             
@@ -53,6 +55,10 @@ int main()
             
         });
     });
+
+    export function getEditorValue() {
+        return editor.state.doc;
+    }
 </script>
 <div id="editor" class="h-full" bind:this={editors}>
 </div>

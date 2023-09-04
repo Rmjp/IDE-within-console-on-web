@@ -1,11 +1,20 @@
 <script>
+  import { version } from '$app/environment';
     import { onMount } from 'svelte';
     var terminal_div = null;
+    let emulator;
+    let versionFile = 0;
+    export function sendFile(data){
+        versionFile += 1;
+        emulator.create_file("/root/code"+versionFile + ".c", data);
+    }
     // var screen_container = null;
-    
+    export function RunFile(){
+        emulator.serial0_send("gcc -o out /root/code"+versionFile + ".c && ./out\n");
+    }
     onMount(async () => {
-        await import('$lib/v86/build/xterm.js');
-        await import('$lib/v86/build/libv86.js');
+        await import('https://adt-s3.runnakjeen.com/build/xterm.js');
+        await import('https://adt-s3.runnakjeen.com/build/libv86.js');
         const { FitAddon } = await import('xterm-addon-fit');
         const { Terminal } = await import('xterm');
         const fitAddon = new FitAddon();
@@ -15,8 +24,9 @@
         terminal.loadAddon(fitAddon);
         terminal.open(terminal_div);
         fitAddon.fit();
-        var emulator = new V86Starter({
-        wasm_path: "src/lib/v86/build/v86.wasm",
+        
+        emulator = new V86Starter({
+        wasm_path: "https://adt-s3.runnakjeen.com/build/v86.wasm",
         memory_size: 512 * 1024 * 1024,
         vga_memory_size: 8 * 1024 * 1024,
         // screen_container: screen_container,
@@ -24,7 +34,7 @@
         disable_keyboard: true,
         disable_mouse: true,
         bios: {
-            url: "src/lib/v86/bios/seabios.bin",
+            url: "https://adt-s3.runnakjeen.com/bios/seabios.bin",
         },
         // vga_bios: {
         //     url: "src/lib/v86/bios/vgabios.bin",
@@ -40,8 +50,8 @@
             //     // # See the `disk_size` item in the packer template.
             // },
             filesystem: {
-                baseurl: "src/lib/v86/images/arch/",
-                basefs: "src/lib/v86/images/fs.json",
+                baseurl: "https://adt-s3.runnakjeen.com/images/arch/",
+                basefs: "https://adt-s3.runnakjeen.com/images/fs.json",
             },
             
             // bzimage_initrd_from_filesystem: true,
@@ -54,7 +64,7 @@
             acpi: false,
             autostart: true,
             initial_state: {
-                "url": "src/lib/v86/images/v86state.bin.zst",
+                "url": "https://adt-s3.runnakjeen.com/images/v86state.bin.zst",
             },
         }); 
 
@@ -69,4 +79,5 @@
 
 <div bind:this={terminal_div} id="terminal_div" class="h-full"></div>
 
-<link rel="stylesheet" href="src/lib/v86/build/xterm.css" />
+<link rel="stylesheet" href="https://adt-s3.runnakjeen.com/build/xterm.css" />
+

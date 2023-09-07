@@ -1,12 +1,13 @@
-<script>
+<script lang="ts">
     import Editor from "$lib/Editor.svelte";
     import Console from "$lib/Console.svelte";
     import Menu from "$lib/Menu.svelte";
 
-    let Editor_component;
-    let Console_component;
+    let Editor_component: Editor;
+    let Console_component: Console;
+    let textValue: string = "";
     const encoder = new TextEncoder();  // TextEncoder is built-in in most modern browsers.
-    function stringToUint8Array(str) {
+    function stringToUint8Array(str: string) {
         return encoder.encode(str);
     }
     function SaveToEmu(){
@@ -16,7 +17,7 @@
 
     function RunToEmu(){
         SaveToEmu();
-        Console_component.RunFile();
+        Console_component.RunFile(textValue);
     }
 
 </script>
@@ -28,7 +29,7 @@
 
         <div class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2 h-full flex flex-col">
             <div class="h-10 py-3">
-                <Menu clickSave={SaveToEmu} clickRun={RunToEmu}/>
+                <Menu clickSave={SaveToEmu} clickRun={RunToEmu} bind:textValue={textValue}/>
             </div>
 
             <div class="flex-grow">

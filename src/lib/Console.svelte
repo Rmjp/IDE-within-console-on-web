@@ -4,8 +4,9 @@
     var terminal_div = null;
     let emulator;
     let versionFile = 0;
-    export function sendFile(data){
+    export function sendFile(data, name){
         versionFile += 1;
+        emulator.serial0_send("rm -rf /root/"+name+"\n");
         emulator.create_file("/root/code"+versionFile + ".c", data);
     }
     // var screen_container = null;

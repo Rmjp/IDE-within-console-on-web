@@ -5,18 +5,18 @@
 
     let Editor_component: Editor;
     let Console_component: Console;
-    let textValue: string = "";
+    let textValue: string = "code.c";
     const encoder = new TextEncoder();  // TextEncoder is built-in in most modern browsers.
     function stringToUint8Array(str: string) {
         return encoder.encode(str);
     }
-    function SaveToEmu(){
+    async function SaveToEmu(){
         let value = Editor_component.getEditorValue();
-        Console_component.sendFile(stringToUint8Array(value));
+        await Console_component.sendFile(stringToUint8Array(value), textValue);
     }
 
-    function RunToEmu(){
-        SaveToEmu();
+    async function RunToEmu(){
+        await SaveToEmu();
         Console_component.RunFile(textValue);
     }
 
@@ -28,7 +28,7 @@
         </div>
 
         <div class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2 h-full flex flex-col">
-            <div class="h-10 py-3">
+            <div class="h-10 pt-1.5">
                 <Menu clickSave={SaveToEmu} clickRun={RunToEmu} bind:textValue={textValue}/>
             </div>
 

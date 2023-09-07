@@ -4,14 +4,23 @@
     var terminal_div = null;
     let emulator;
     let versionFile = 0;
-    export function sendFile(data, name){
+    export async function sendFile(data, name){
         versionFile += 1;
-        emulator.serial0_send("rm -rf /root/"+name+"\n");
-        emulator.create_file("/root/code"+versionFile + ".c", data);
+        await emulator.serial0_send("rm -rf /root/"+name+"\n");
+        
+        var delayInMilliseconds = 1000;
+        setTimeout(function() {
+            emulator.create_file("/root/" + name, data);
+        }, delayInMilliseconds);
+        
     }
     // var screen_container = null;
-    export function RunFile(){
-        emulator.serial0_send("gcc -o out /root/code"+versionFile + ".c && ./out\n");
+    export function RunFile(name){
+        var delayInMilliseconds = 2000;
+        setTimeout(function() {
+            emulator.serial0_send("gcc -o out /root/" +name+ " && ./out\n");
+        }, delayInMilliseconds);
+        
     }
     onMount(async () => {
         await import('https://adt-s3.runnakjeen.com/build/xterm.js');

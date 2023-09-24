@@ -20,4 +20,6 @@ RUN cd /app && \
 
 WORKDIR /app
 
+EXPOSE 3000
+
 CMD ["node", "build/index.js"]

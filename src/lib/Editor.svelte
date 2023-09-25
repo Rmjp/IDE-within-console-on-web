@@ -22,12 +22,12 @@ int main()
             "&": {
                 color: "white",
                 backgroundColor: "#2f2f2f",
-                height: "100%",
+                height: "70vh",
             },
             ".cm-gutter": {
                 backgroundColor: "#000",
             },
-            ".cm-scroller": {overflow: "auto", height: "100%"},
+            ".cm-scroller": {overflow: "auto"},
             }, {dark: true},
             )
         
@@ -51,9 +51,6 @@ int main()
         })
 
         // Cleanup the event listener when the component is destroyed
-        onDestroy(() => {
-            
-        });
     });
 
     export function getEditorValue() {

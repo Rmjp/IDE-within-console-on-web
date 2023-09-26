@@ -21,14 +21,14 @@
     }
 
 </script>
-<div class="h-screen">
-    <div class="flex flex-row flex-wrap h-full">
-        <div class="w-full sm:w-1/3 md:w-1/4 px-2 h-full">
+<div class="h-screen w-screen bg-neutral-300">
+    <div class="flex flex-row lg:flex-col flex-wrap h-full">
+        <div class="w-full w-screen h-10 lg:w-[10vw] lg:h-full px-2">
             nav
         </div>
 
-        <div class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2 h-full flex flex-col">
-            <div class="h-10 pt-1.5">
+        <div class="pt-1 px-2 h-full lg:flex flex-col">
+            <div class="h-10 pt-1.5 px-2 bg-zinc-300 border-solid border-2 border-zinc-800 rounded-md">
                 <Menu clickSave={SaveToEmu} clickRun={RunToEmu} bind:textValue={textValue}/>
             </div>
 

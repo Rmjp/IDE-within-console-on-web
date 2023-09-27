@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { doc_now, doc_set } from "./stores"
+
     import {basicSetup} from "codemirror"
     import {EditorView, keymap} from "@codemirror/view"
     import {cpp, cppLanguage} from "@codemirror/lang-cpp"
@@ -8,13 +10,10 @@
     import {tags} from "@lezer/highlight"
     import {HighlightStyle, syntaxHighlighting} from "@codemirror/language"
 
-    let doc = `#include <stdio.h>
-
-int main()
-{
-  printf("Hello, world!\\n");
-  return 0;
-}`;
+    let doc = "";
+    doc_now.subscribe((value) => {
+            doc = value;
+        });
     let editors;
     let state;
     let editor;
@@ -52,33 +51,46 @@ int main()
             {tag: tags.squareBracket, color: "#BDFFBA"},
             //define
             {tag: tags.meta, color: "#4FFF49"},
-            ])
+        ])
         
         state = EditorState.create({
             doc,
-        extensions: [
-            basicSetup,
-            language.of(cpp()),
-            keymap.of([indentWithTab]),
-            tabSize.of(EditorState.tabSize.of(10)),
-            cpp(),
-            theme,
-            syntaxHighlighting(myHighlightStyle),
-        ],
+            extensions: [
+                basicSetup,
+                language.of(cpp()),
+                keymap.of([indentWithTab]),
+                tabSize.of(EditorState.tabSize.of(10)),
+                cpp(),
+                theme,
+                syntaxHighlighting(myHighlightStyle),
+                // EditorView.updateListener.of(function(e) {
+                //     let val = e.state.doc.toString();
+                //     doc_now.set(val);
+                // }),
+            ],
         })
-
+        
         editor = new EditorView({
             state,
             parent: editors,
             
         })
-
-        // Cleanup the event listener when the component is destroyed
+        
+        setInterval(() => {
+            doc_now.set(editor.state.doc.toString());
+        }, 1000);
     });
-
+    
     export function getEditorValue() {
         return editor.state.doc;
     }
+
+    export function setEditorValue(value) {
+        editor.dispatch({
+            changes: {from: 0, to: editor.state.doc.length, insert: value}
+            })
+    }
+    
 </script>
 <div id="editor" class="h-full" bind:this={editors}>
 </div>

@@ -39,3 +39,63 @@ export function getListNames(db) {
         };
     });
 }
+
+export function getValue(db, name) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["files"], "readonly");
+        const objectStore = transaction.objectStore("files");
+        const request = objectStore.get(name);
+        request.onsuccess = (event) => {
+            resolve(event.target.result);
+        };
+        request.onerror = (event) => {
+            console.error("Error getting value:", event.target.error);
+            reject(event.target.error);
+        };
+    });
+}
+
+export function addValue(db, name, value) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["files"], "readwrite");
+        const objectStore = transaction.objectStore("files");
+        const request = objectStore.add({ name, value });
+        request.onsuccess = (event) => {
+            resolve(event.target.result);
+        };
+        request.onerror = (event) => {
+            console.error("Error adding value:", event.target.error);
+            reject(event.target.error);
+        };
+    });
+}
+
+export function updateValue(db, name, value) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["files"], "readwrite");
+        const objectStore = transaction.objectStore("files");
+        const request = objectStore.put({ name, value });
+        request.onsuccess = (event) => {
+            resolve(event.target.result);
+        };
+        request.onerror = (event) => {
+            console.error("Error updating value:", event.target.error);
+            reject(event.target.error);
+        };
+    });
+}
+
+export function deleteValue(db, name) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(["files"], "readwrite");
+        const objectStore = transaction.objectStore("files");
+        const request = objectStore.delete(name);
+        request.onsuccess = (event) => {
+            resolve(event.target.result);
+        };
+        request.onerror = (event) => {
+            console.error("Error deleting value:", event.target.error);
+            reject(event.target.error);
+        };
+    });
+}

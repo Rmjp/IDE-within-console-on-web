@@ -78,7 +78,7 @@
         
         setInterval(() => {
             doc_now.set(editor.state.doc.toString());
-        }, 1000);
+        }, 5000);
     });
     
     export function getEditorValue() {

@@ -1,5 +1,5 @@
 const dbName = "files";
-export function connectIDB(dbName) {
+export function connectIDB() {
     return new Promise((resolve, reject) => {
         let db;
         const request = indexedDB.open(dbName);
@@ -28,7 +28,7 @@ export function connectIDB(dbName) {
 export function getListNames(db) {
     return new Promise((resolve, reject) => {
         const transaction = db.transaction(["files"], "readonly");
-        const objectStore = transaction.objectStore("name");
+        const objectStore = transaction.objectStore("files");
         const request = objectStore.getAllKeys();
         request.onsuccess = (event) => {
             resolve(event.target.result);

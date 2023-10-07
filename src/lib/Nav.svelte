@@ -5,7 +5,7 @@
   let files = [];
   let name = "";
   let doc_value = "";
-  
+  let prev_name = "";
   onMount(async ()=>{
     let local_value = localStorage.getItem('doc_now');
     if(local_value){
@@ -19,16 +19,20 @@
 
     let db = await idbf.connectIDB();
     files = await idbf.getListNames(db);
-    doc_name.subscribe((value) => {
+    doc_name.subscribe(async (value) => {
+      prev_name = name;
       name = value;
+      if(files.includes(prev_name)){
+        await idbf.updateValue(db, name, doc_value);
+      }
       if(files.includes(name)){
         let value = await idbf.getValue(db, name);
         doc_now.set(value);
       }
       else{
-        idbf.addValue(db, name, );
+        console.log("File not found");
       }
-    }); 
+    });
   });
 </script>
   

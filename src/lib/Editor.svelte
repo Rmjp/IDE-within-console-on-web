@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { doc_now, doc_set } from "./stores"
+    import { doc_now } from "./stores"
 
     import {basicSetup} from "codemirror"
     import {EditorView, keymap} from "@codemirror/view"
@@ -78,7 +78,7 @@
         
         setInterval(() => {
             doc_now.set(editor.state.doc.toString());
-        }, 5000);
+        }, 1000);
     });
     
     export function getEditorValue() {

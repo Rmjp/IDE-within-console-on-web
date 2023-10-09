@@ -20,6 +20,7 @@
     let db = await idbf.connectIDB();
     files = await idbf.getListNames(db);
     doc_name.subscribe(async (value) => {
+      console.log(value);
       prev_name = name;
       name = value;
       if(files.includes(prev_name)){
@@ -30,20 +31,21 @@
         doc_now.set(value);
       }
       else{
-        console.log("File not found");
+        await idbf.addValue(db, name, doc_value);
+        files.push(name);
       }
     });
   });
 </script>
   
 <div class="text-center">
-  {#each files as file (file.name)}
+  {#each files as file (file)}
     <div class="flex flex-row justify-center">
       <div class="w-1/2">
-        <input type="text" value={file.name} class="w-full" />
+        <input type="text" value={file} class="w-full" />
       </div>
       <div class="w-1/2">
-        <button class="w-full" on:click={() => {doc_now.set(file.content)}}>Open</button>
+        <button class="w-full" on:click={() => {doc_name.set(file); console.log(file);}}>Open</button>
       </div>
     </div>
   {/each}

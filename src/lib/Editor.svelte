@@ -63,10 +63,10 @@
                 cpp(),
                 theme,
                 syntaxHighlighting(myHighlightStyle),
-                // EditorView.updateListener.of(function(e) {
-                //     let val = e.state.doc.toString();
-                //     doc_now.set(val);
-                // }),
+                EditorView.updateListener.of(function(e) {
+                    let val = e.state.doc.toString();
+                    doc_now.set(val);
+                }),
             ],
         })
         
@@ -76,9 +76,9 @@
             
         })
         
-        setInterval(() => {
-            doc_now.set(editor.state.doc.toString());
-        }, 1000);
+        // setInterval(() => {
+        //     doc_now.set(editor.state.doc.toString());
+        // }, 1000);
     });
     
     export function getEditorValue() {

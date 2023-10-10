@@ -6,6 +6,19 @@
   let name = "";
   let doc_value = "";
   let prev_name = "";
+  function save_file(name){
+    if(files.includes(name)){
+        let value = await idbf.getValue(db, name);
+        doc_now.set(value);
+      }
+      else{
+        await idbf.addValue(db, name, doc_value);
+        files.push(name);
+      }
+  }
+  doc_name.subscribe(async (value) => {
+      console.log(value);
+    });
   onMount(async ()=>{
     let local_value = localStorage.getItem('doc_now');
     if(local_value){
@@ -19,22 +32,6 @@
 
     let db = await idbf.connectIDB();
     files = await idbf.getListNames(db);
-    doc_name.subscribe(async (value) => {
-      console.log(value);
-      prev_name = name;
-      name = value;
-      if(files.includes(prev_name)){
-        await idbf.updateValue(db, name, doc_value);
-      }
-      if(files.includes(name)){
-        let value = await idbf.getValue(db, name);
-        doc_now.set(value);
-      }
-      else{
-        await idbf.addValue(db, name, doc_value);
-        files.push(name);
-      }
-    });
   });
 </script>
   

@@ -24,6 +24,7 @@
                 color: "white",
                 backgroundColor: "#2f2f2f",
                 height: "70vh",
+                width: "89vw",
             },
             ".cm-gutter": {
                 backgroundColor: "#000",

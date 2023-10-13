@@ -3,18 +3,24 @@
   import { doc_now, doc_name } from "./stores"
   import * as idbf from "./idb.js";
   let files = [];
-  let name = "";
+  let cur_file = "";
   let doc_value = "";
-  let prev_name = "";
-  function save_file(name){
+  async function save_file(name){
     if(files.includes(name)){
-        let value = await idbf.getValue(db, name);
-        doc_now.set(value);
-      }
-      else{
-        await idbf.addValue(db, name, doc_value);
-        files.push(name);
-      }
+      await idbf.updateValue(db, name, doc_value);
+    }
+    else{
+      await idbf.addValue(db, name, doc_value);
+      files.push(name);
+    }
+  }
+  async function get_file(name){
+    if(files.includes(name)){
+      return await idbf.getValue(db, name);
+    }
+    else{
+      return "";
+    }
   }
   doc_name.subscribe(async (value) => {
       console.log(value);
@@ -28,22 +34,19 @@
       doc_value = value;
       localStorage.setItem('doc_now', doc_value);
     });
-    
+    files.push("temp");
+    cur_file = "temp";
 
     let db = await idbf.connectIDB();
-    files = await idbf.getListNames(db);
+    let names = await idbf.getListNames(db);
+    files = [...files, ...names];
   });
 </script>
   
 <div class="text-center">
   {#each files as file (file)}
-    <div class="flex flex-row justify-center">
-      <div class="w-1/2">
-        <input type="text" value={file} class="w-full" />
-      </div>
-      <div class="w-1/2">
-        <button class="w-full" on:click={() => {doc_name.set(file); console.log(file);}}>Open</button>
-      </div>
+    <div class="border-solid border-2 border-zinc-800">
+      <button class="w-full" on:click={() => {save_file(cur_file); cur_file = file; doc_now.set(get_file(file));}}>{file}</button>
     </div>
   {/each}
 </div>

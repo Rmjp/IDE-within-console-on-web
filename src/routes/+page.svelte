@@ -1,14 +1,15 @@
-<script lang="ts">
+<script>
     import Editor from "$lib/Editor.svelte";
     import Console from "$lib/Console.svelte";
     import Menu from "$lib/Menu.svelte";
     import Nav from "$lib/Nav.svelte";
 
-    let Editor_component: Editor;
-    let Console_component: Console;
-    let textValue: string = "code.c";
+    let Editor_component;
+    let Console_component;
+    let Nev_component;
+    let textValue;
     const encoder = new TextEncoder();  // TextEncoder is built-in in most modern browsers.
-    function stringToUint8Array(str: string) {
+    function stringToUint8Array(str) {
         return encoder.encode(str);
     }
     async function SaveToEmu(){
@@ -25,7 +26,7 @@
 <div class="h-screen w-screen bg-neutral-300">
     <div class="flex flex-row lg:flex-col flex-wrap h-full">
         <div class="w-full w-screen h-10 lg:w-[10vw] lg:h-full px-2">
-            <Nav/>
+            <Nav bind:cur_file={textValue}/>
         </div>
 
         <div class="pt-1 px-2 h-full lg:flex flex-col">

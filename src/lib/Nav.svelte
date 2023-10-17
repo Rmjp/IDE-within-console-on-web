@@ -3,7 +3,7 @@
   import { doc_now, doc_name } from "./stores"
   import * as idbf from "./idb.js";
   let files = [];
-  let cur_file = "";
+  export let cur_file = "";
   let doc_value = "";
   async function save_file(name){
     if(files.includes(name)){
@@ -34,8 +34,8 @@
       doc_value = value;
       localStorage.setItem('doc_now', doc_value);
     });
-    files.push("temp");
-    cur_file = "temp";
+    files.push("workspace");
+    cur_file = "workspace";
 
     let db = await idbf.connectIDB();
     let names = await idbf.getListNames(db);

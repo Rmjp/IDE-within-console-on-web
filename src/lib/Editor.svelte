@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
     import { doc_now } from "./stores"
 
     import {basicSetup} from "codemirror"
@@ -9,6 +9,7 @@
     import { onMount, onDestroy } from 'svelte';
     import {tags} from "@lezer/highlight"
     import {HighlightStyle, syntaxHighlighting} from "@codemirror/language"
+    import { vim } from "@replit/codemirror-vim"
 
     let doc = "";
     doc_now.subscribe((value) => {
@@ -17,6 +18,7 @@
     let editors;
     let state;
     let editor;
+    export let vim_mode = false;
     onMount(() => {
         let language = new Compartment, tabSize = new Compartment
         let theme = EditorView.theme({
@@ -53,14 +55,24 @@
             //define
             {tag: tags.meta, color: "#4FFF49"},
         ])
-        
+        let keymap_st = vim_mode ? vim() : keymap.of([
+                    {key: "Tab", run: ()=>{
+                        editor.dispatch({
+                            changes: {from: editor.state.selection.main.from, to: editor.state.selection.main.to, insert: "    "},
+                            selection: {anchor: editor.state.selection.main.head + 4, head: editor.state.selection.main.head + 4}
+                        });
+                    },
+                    preventDefault: true
+                    },
+                ]);
         state = EditorState.create({
             doc,
             extensions: [
                 basicSetup,
                 language.of(cpp()),
-                keymap.of([indentWithTab]),
-                tabSize.of(EditorState.tabSize.of(10)),
+                // keymap.of([indentWithTab]),
+                // tabSize.of(EditorState.tabSize.of(10)),
+                keymap_st,
                 cpp(),
                 theme,
                 syntaxHighlighting(myHighlightStyle),
